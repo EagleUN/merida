@@ -1,7 +1,7 @@
 import express from "express";
 import { NextFunction, Request, Response } from "express-serve-static-core";
 import logger from "morgan";
-import testRouter from "../controllers/routes/Test";
+import postsRouter from "../controllers/routes/Posts";
 
 const router = express.Router();
 const logFormat =
@@ -16,7 +16,7 @@ router.use(logger(logFormat));
 router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
-router.use("/test", testRouter);
+router.use("/posts", postsRouter);
 
 router.get("/", healthCheck);
 
