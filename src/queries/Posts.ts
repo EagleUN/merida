@@ -14,9 +14,9 @@ const insertJob = async(payload: any): Promise<string> => {
 
 const createPostPayload = (payload: any): any => {
   return {
-    id: uuid(),
+    id: payload.id ? payload.id: uuid(),
     createdAt: new Date(),
-    creatorId: payload.idCreator,
+    idCreator: payload.idCreator,
     content: payload.content,
   };
 }
@@ -37,8 +37,20 @@ const deletePost = async($id: string): Promise<string> => {
   return $id;
 }
 
+const updatePost = async(postId: string, newContent: string): Promise<string> => {
+  const client = await clientPromise;
+  const collection = client.db().collection(POSTS_COLLECTION);
+
+  const currentPost = await collection.findOne({ id: postId });
+  const newPost = createPostPayload({ id: currentPost.id, idCreator: currentPost.idCreator, content: newContent });
+
+  await collection.findOneAndReplace({ id: postId }, newPost);
+  return postId;
+}
+
 export default {
   insertJob,
   getPostById,
   deletePost,
+  updatePost,
 }
