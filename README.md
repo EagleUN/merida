@@ -15,7 +15,7 @@ To install node packages run:
 
 **Run merida using nodemon**
 
-Run following commands con console in source of project:
+Run following commands on console in source of project:
 
 * ```npm run dev```
 
