@@ -1,17 +1,17 @@
 import { NextFunction, Request, Response } from "express-serve-static-core";
 import { check } from "express-validator/check";
 import validation from "../../utils/Validator";
-import Test from "../../use_cases/Test";
+import GetPost from "../../use_cases/GetPost";
 
 const test = [
   check("id")
-  .exists()
-  .isString(),
+    .exists()
+    .isUUID(),
   validation,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { id } = req.params;
-      const result = await Test.test(id);
+      const postId = req.params.id;
+      const result = await GetPost.getPost(postId);
       res.status(200).json(result);
     } catch (error) {
       next(error);
