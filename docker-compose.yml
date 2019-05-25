@@ -1,18 +1,17 @@
 version: '3'
 
 services:
-  mongodb:
-    image: bitnami/mongodb:4.0.9
-    container_name: meridaMongodb
+  mongo:
+    image: mongo
     ports:
       - '27017:27017'
-    volumes:
-      - 'mongodb_data:/bitnami'
-    environment:
-      - MONGODB_REPLICA_SET_NAME=rs0
-      - MONGO_DATABASE=merida
-      - MONGODB_REPLICA_SET_MODE=primary
-      - MONGODB_ADVERTISED_HOSTNAME=localhost
 
-volumes:
-  mongodb_data:
+  merida:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      - MONGO_DB_URL=mongodb://mongo:27017/merida
+    depends_on:
+      - mongo
+    command: bash -c "node build/Server.js"

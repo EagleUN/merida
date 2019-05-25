@@ -24,9 +24,9 @@ const createPostPayload = (payload: any): any => {
 const getPostById = async($id: string): Promise<any> => {
   const client = await clientPromise;
   const collection = client.db().collection(POSTS_COLLECTION);
-
-  const job = await collection.findOne({ id: $id });
-  return job;
+  
+  const post = await collection.findOne({ id: $id });
+  return post;
 }
 
 const deletePost = async($id: string): Promise<string> => {
