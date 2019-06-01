@@ -1,0 +1,71 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "merida"
+tags:
+  - name: "posts"
+    description: "Functions related to posts"
+paths:
+  /posts:
+    get:
+      summary: "Retrieves a list of posts that belong to the home feed"
+      parameters:
+        - in: path
+          name: userId
+          type: string
+          required: true
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200: 
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Post"
+        500:
+          description: "Internal Server Error while fetching posts"
+      tags:
+        - "home-feed"
+  /feeds/profile/{userId}:
+    get:
+      summary: "Retrieves a list of posts that belong to the profile feed"
+      parameters:
+        - in: path
+          name: userId
+          type: string
+          required: true
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200: 
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Post"
+        500:
+          description: "Internal Server Error while fetching posts"
+      tags:
+        - "profile-feed"
+  /:
+    get:
+      summary: "Health Check for merida"
+      responses:
+        200:
+          description: "merida is healthy"
+      tags:
+        - "health"
+definitions:
+  Post:
+    type: object
+    properties:
+      id:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      idCreator:
+        type: string
+      content:
+        type: string

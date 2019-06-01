@@ -7,8 +7,8 @@ import updatePostController from "../../controllers/posts/UpdatePostController";
 const router = express.Router();
 
 router.post("/", createPostController);
-router.get("/find/:id", getPostController);
-router.post("/delete/:id", deletePostController);
-router.post("/update/:id", updatePostController);
+router.get("/:id", getPostController);
+router.delete("/:id", deletePostController);
+router.put("/:id", updatePostController);
 
 export default router;
