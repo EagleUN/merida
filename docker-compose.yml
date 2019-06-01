@@ -1,17 +1,19 @@
-version: '3'
+version: '3.3'
 
 services:
   mongo:
     image: mongo
     ports:
-      - '27017:27017'
+      - '27018:27017'
 
   merida:
     build: .
     ports:
-      - '3000:3000'
+      - '3002:3002'
     environment:
       - MONGO_DB_URL=mongodb://mongo:27017/merida
+      - WAIT_HOSTS= mongo:27017
+    links:
+      - mongo
     depends_on:
       - mongo
-    command: bash -c "node build/Server.js"
