@@ -7,55 +7,98 @@ tags:
     description: "Functions related to posts"
 paths:
   /posts:
-    get:
-      summary: "Retrieves a list of posts that belong to the home feed"
-      parameters:
-        - in: path
-          name: userId
-          type: string
-          required: true
+    post:
+      summary: "Create new Post"
+      description: ""
       consumes:
-        - "application/json"
+      - "application/json"
       produces:
-        - "application/json"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Information required to create the post"
+        required: true
+        schema:
+          $ref: "#/definitions/CreatePost"
+      responses:
+        201: 
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Post"
+        500:
+          description: "Internal Server Error while creating posts"
+      tags:
+        - "posts"
+  /posts/{id}:
+    get:
+      summary: "Get a post"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: path
+        name: id
+        type: string
+        required: true
       responses:
         200: 
           description: "Success"
           schema:
             $ref: "#/definitions/Post"
         500:
-          description: "Internal Server Error while fetching posts"
+          description: "Internal Server Error while fetching post"
       tags:
-        - "home-feed"
-  /feeds/profile/{userId}:
-    get:
-      summary: "Retrieves a list of posts that belong to the profile feed"
-      parameters:
-        - in: path
-          name: userId
-          type: string
-          required: true
+        - "posts"
+    put:
+      summary: "Update a post"
+      description: ""
       consumes:
-        - "application/json"
+      - "application/json"
       produces:
-        - "application/json"
+      - "application/json"
+      parameters:
+      - in: path
+        name: id
+        type: string
+        required: true
+      - in: body
+        name: newContent
+        required: true
+        schema:
+          $ref: "#/definitions/NewContent"
       responses:
         200: 
           description: "Success"
           schema:
             $ref: "#/definitions/Post"
         500:
-          description: "Internal Server Error while fetching posts"
+          description: "Internal Server Error while updating post"
       tags:
-        - "profile-feed"
-  /:
-    get:
-      summary: "Health Check for merida"
+        - "posts"
+    delete:
+      summary: "Delete a post"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: path
+        name: id
+        type: string
+        required: true
       responses:
-        200:
-          description: "merida is healthy"
+        200: 
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Post"
+        500:
+          description: "Internal Server Error while deleting post"
       tags:
-        - "health"
+        - "posts"
 definitions:
   Post:
     type: object
@@ -68,4 +111,16 @@ definitions:
       idCreator:
         type: string
       content:
+        type: string
+  CreatePost:
+    type: object
+    properties:
+      idCreator:
+        type: string
+      content:
+        type: string
+  NewContent:
+    type: object
+    properties:
+      newContent:
         type: string
