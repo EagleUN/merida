@@ -48,9 +48,19 @@ const updatePost = async(postId: string, newContent: string): Promise<any> => {
   return newPost;
 }
 
+const getPostsByCreatorId = async(creatorId: string): Promise<any> => {
+  const client = await clientPromise;
+  const collection = client.db().collection(POSTS_COLLECTION);
+
+  const result = await collection.find({ idCreator: creatorId });
+  const posts = await result.toArray();
+  return posts;
+}
+
 export default {
   insertPost,
   getPostById,
   deletePost,
   updatePost,
+  getPostsByCreatorId
 }
