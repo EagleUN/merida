@@ -9,7 +9,7 @@ paths:
   /posts:
     post:
       summary: "Create new Post"
-      description: ""
+      description: "Creates a new Post on merida db"
       consumes:
       - "application/json"
       produces:
@@ -33,7 +33,7 @@ paths:
   /posts/{id}:
     get:
       summary: "Get a post"
-      description: ""
+      description: "Fetch attributes of a post, which is founded using its id"
       consumes:
       - "application/json"
       produces:
@@ -54,7 +54,7 @@ paths:
         - "posts"
     put:
       summary: "Update a post"
-      description: ""
+      description: "Update the content of a post"
       consumes:
       - "application/json"
       produces:
@@ -80,7 +80,7 @@ paths:
         - "posts"
     delete:
       summary: "Delete a post"
-      description: ""
+      description: "Remove post from merida db"
       consumes:
       - "application/json"
       produces:
@@ -99,6 +99,29 @@ paths:
           description: "Internal Server Error while deleting post"
       tags:
         - "posts"
+  /creator/{creatorId}:
+    get:
+      summary: "Get a list of posts"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: path
+        name: creatorId
+        type: string
+        required: true
+      responses:
+        200: 
+          description: "Success"
+          schema:
+            $ref: "#/definitions/PostArray"
+        500:
+          description: "Internal Server Error while fetching post"
+      tags:
+        - "posts"
+
 definitions:
   Post:
     type: object
@@ -124,3 +147,17 @@ definitions:
     properties:
       newContent:
         type: string
+  PostArray:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        idCreator:
+          type: string
+        content:
+          type: string
