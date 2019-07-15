@@ -2,9 +2,9 @@ import MongoDb, { MongoClient } from "mongodb";
 import Config from "../utils/Config";
 import Logger from "../utils/Logger";
 
-export const log = Logger("Mongo Gateway");
+export const log = Logger("Slave Mongo Gateway");
 
-export const clientPromise = MongoDb.connect(Config.get("MONGO_DB_URL"), {
+export const clientPromise = MongoDb.connect(Config.get("SLAVE_DB_URL"), {
   useNewUrlParser: true,
 });
 
