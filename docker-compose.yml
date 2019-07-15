@@ -11,8 +11,7 @@ services:
     ports:
       - '3002:3002'
     environment:
-      - MONGO_DB_URL=mongodb://mongo:27017/merida
-      - WAIT_HOSTS= mongo:27017
+      - MONGO_DB_URL=mongodb://mongo:27017/merida      
     links:
       - mongo
     depends_on:
