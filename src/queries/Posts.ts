@@ -6,12 +6,10 @@ const POSTS_COLLECTION = "posts";
 const LOAD_COLLECTION = "lb";
 
 const insertPost = async(payload: any): Promise<string> => {
-  await insertFirstLoadBalancerRow();
   const client = await masterPromise;
   const collection = client.db().collection(POSTS_COLLECTION);  
   const postsPayload = createPostPayload(payload);
-  await collection.insertOne(postsPayload);
-  await updateCount("master");
+  await collection.insertOne(postsPayload);  
   return postsPayload;
 }
 
@@ -41,25 +39,21 @@ const getPostById = async($id: string): Promise<any> => {
 }
 
 const deletePost = async($id: string): Promise<any> => {
-  await insertFirstLoadBalancerRow();
   const client = await masterPromise;
   const collection = client.db().collection(POSTS_COLLECTION);
 
-  const deletedPost = await collection.findOneAndDelete({ id: $id });
-  await updateCount("master");
+  const deletedPost = await collection.findOneAndDelete({ id: $id });  
   return deletedPost.value;
 }
 
 const updatePost = async(postId: string, newContent: string): Promise<any> => {
-  await insertFirstLoadBalancerRow();
   const client = await masterPromise;
   const collection = client.db().collection(POSTS_COLLECTION);
 
   const currentPost = await collection.findOne({ id: postId });
   const newPost = createPostPayload({ id: currentPost.id, idCreator: currentPost.idCreator, content: newContent });
 
-  await collection.findOneAndReplace({ id: postId }, newPost);
-  await updateCount("master");
+  await collection.findOneAndReplace({ id: postId }, newPost);  
   return newPost;
 }
 
